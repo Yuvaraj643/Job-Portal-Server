@@ -25,6 +25,11 @@ const jobSchema = new mongoose.Schema({
         default: "Mumbai",
         required: [true, "Work location is required"],
     },
+     description: {
+        type: String,
+        requied: [true, "Description is require"],
+        maxlength: 100,
+    },
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: "User",
