@@ -12,11 +12,12 @@ const app =express()
 dotenv.config()
 
 //middleware
+app.use(cors())
 app.use(express.json())
 app.use("/api",route)
 app.use("/api",jobRoute)
 
-app.use(cors())
+
 
 app.use(errorMiddleware)
 
