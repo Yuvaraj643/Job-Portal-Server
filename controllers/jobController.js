@@ -2,7 +2,7 @@ import jobModel from "../models/jobModel.js"
 
 //post api to create jobs
 export const createJobController = async(req, res, next) =>{
-    const {company,position,jobType} = req.body
+    const {company,position,jobType,description} = req.body
     if(!company || !position){
         next('Please provide Values')
     }
@@ -12,7 +12,8 @@ export const createJobController = async(req, res, next) =>{
     const newJob={
         company,
         position,
-        jobType
+        jobType,
+        description
     }
     const job = await jobModel.create(newJob)
     res.status(200).json({
