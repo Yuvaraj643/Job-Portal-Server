@@ -35,11 +35,11 @@ export const getAllJobController = async(req, res, next) =>{
 export const updateJobController = async(req, res, next) =>{
     try{
         const {id} =req.params
-        const {workLocation,position} = req.body
+        const {company, position, workLocation, workType, jobType} = req.body
 
-        console.log(workLocation, position)
+        console.log(company, position, workLocation, workType, jobType)
     
-        if(!workLocation || !position){
+        if(!workLocation || !position || !company || !workType|| !jobType ){
             next('Please Provide All fields')
         }
         console.log('Before Monogb Command')
@@ -50,8 +50,11 @@ export const updateJobController = async(req, res, next) =>{
         }
 
         const updateJob = await jobModel.findOneAndUpdate({_id:id},{
+            company : company,
             workLocation : workLocation,
-            position: position
+            position: position,
+            workType : workType,
+            jobType : jobType
         })
 
         res.status(200).json({
@@ -80,4 +83,23 @@ export const deleteJobController = async(req, res, next) =>{
         next('Error in Controller')
     }
 }
+
+
+const getOneJobController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const job = await jobModel.findOne({ _id: id });
+    if (!job) return res.status(404).json({ error: "Job not found" });
+
+    res.status(200).json({
+      success: true,
+      message: "Job fetched successfully",
+      job,
+    });
+  } catch (err) {
+    return res.status(500).json({ error: err });
+  }
+};
+
+export default getOneJobController;
 
