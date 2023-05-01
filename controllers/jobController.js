@@ -85,7 +85,7 @@ export const deleteJobController = async(req, res, next) =>{
 }
 
 
-const getOneJobController = async (req, res) => {
+export const getOneJobController = async (req, res) => {
   try {
     const { id } = req.params;
     const job = await jobModel.findOne({ _id: id });
@@ -100,6 +100,4 @@ const getOneJobController = async (req, res) => {
     return res.status(500).json({ error: err });
   }
 };
-
-export default getOneJobController;
 
