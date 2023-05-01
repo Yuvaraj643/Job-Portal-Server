@@ -10,6 +10,8 @@ route.get('/get-jobs', getAllJobController)
 //update
 route.patch('/update-job/:id', updateJobController)
 
+route.get('update-job/:id' , getOneJobController)
+
 //delete
 route.delete('/delete-job/:id', deleteJobController)
 
