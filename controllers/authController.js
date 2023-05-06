@@ -66,7 +66,7 @@ export const loginController = async (req, res, next) =>{
       if (!isPasswordValid) {
       res.status(200).json({
           success : true,
-          message : 'Incorrect Password',
+          error : 'Incorrect Password',
       })
     }
 
