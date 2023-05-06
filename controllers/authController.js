@@ -49,7 +49,7 @@ export const loginController = async (req, res, next) =>{
   try{
       const {email,password} =req.body
 
-      if(!email || password){
+      if(!email || !password){
           next('Provide all Fields')
       }
 
