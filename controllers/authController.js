@@ -62,10 +62,10 @@ export const loginController = async (req, res, next) =>{
           next('Invalid Email and Password')
       }
 
-      const isPassword = bcrypt.compareSync(password, user.password)
-      if(!isPassword){
-          next('Incorrect Password')
-      }
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+      return next('Incorrect Password');
+    }
 
       res.status(200).json({
           success : true,
