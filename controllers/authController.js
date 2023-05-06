@@ -50,21 +50,21 @@ export const loginController = async (req, res, next) =>{
       const {email,password} =req.body
 
       if(!email){
-         return next('Provide all Fields');
+         next('Provide all Fields');
       }
     if(!password){
-      return next('Password should not be empty');
+      next('Password should not be empty');
     }
 
       const user = await userModel.findOne({email})
       
       if(!user){
-         return next('Invalid Email and Password');
+         next('Invalid Email and Password');
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-      return next('Incorrect Password');
+      next('Incorrect Password');
     }
 
       res.status(200).json({
