@@ -49,9 +49,12 @@ export const loginController = async (req, res, next) =>{
   try{
       const {email,password} =req.body
 
-      if(!email || !password){
+      if(!email){
           next('Provide all Fields')
       }
+    if(!password){
+      next('Password should not be empty')
+    }
 
       const user = await userModel.findOne({email})
       
