@@ -1,49 +1,48 @@
 import mongoose from "mongoose";
 
-const jobSchema = new mongoose.Schema({
-    company: {
-        type: String,
-        requied: [true, "Companay name is require"],
-    },
+const jobSchema = new mongoose.Schema(
+  {
     position: {
-        type: String,
-        required: [true, "Job Position is required"],
-        maxlength: 100,
+      type: String,
+      required: [true, "Job Position is required"],
+      maxlength: 100,
+    },
+    company: {
+      type: String,
+      requied: [true, "Companay name is require"],
     },
     workLocation: {
-        type: String,
-        default: "Mumbai",
-        required: [true, "Work location is required"],
+      type: String,
+      required: [true, "Work location is required"],
     },
-    status: {
-        type: String,
-        enum: ["pending", "reject", "interview"],
-        default: "pending",
+    salary: {
+      type: String,
+      requied: [true, "Salary is Required"],
     },
     workType: {
-        type: String,
-        enum: ["full-time", "part-time", "internship", "contaract"],
-        default: "full-time",
+      type: String,
+      enum: ["full-time", "part-time", "internship", "contaract"],
     },
-
-     description: {
-        type: String,
-        requied: [true, "Description is require"],
-        maxlength: 100,
+    shift: {
+      type: String,
+      enum: ["Morning shift", "Monday to Friday", "Day shift", "Night Shift"],
+    },
+    description: {
+      type: String,
+      requied: [true, "Description is require"],
+      maxlength: 100,
+    },
+    status: {
+      type: String,
+      enum: ["pending", "reject", "interview"],
+      default: "pending",
     },
     createdBy: {
-        type: mongoose.Types.ObjectId,
-        ref: "User",
+      type: mongoose.Types.ObjectId,
+      ref: "User",
     },
-    jobType:{
-        type : String, 
-        default : "Developer",
-        required: [true, "Job Type is required"],
-
-    }
-
-    },
-    { timestamps: true }
+  },
+  { timestamps: true }
 );
 
-export default mongoose.model('Job', jobSchema)
+export default mongoose.model("Job", jobSchema);
