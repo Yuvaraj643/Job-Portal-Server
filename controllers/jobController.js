@@ -32,38 +32,67 @@ export const getAllJobController = async(req, res, next) =>{
     })
 }
 
-export const updateJobController = async(req, res, next) =>{
-    try{
-        const {id} =req.params
-        const {company, position, workLocation, workType, jobType} = req.body
+export const updateJobController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      position,
+      company,
+      workLocation,
+      salary,
+      workType,
+      shift,
+      description,
+    } = req.body;
 
-        console.log(company, position, workLocation, workType, jobType)
-    
-        if(!workLocation || !position || !company || !workType|| !jobType ){
-            next('Please Provide All fields')
-        }
-        console.log('Before Monogb Command')
-        const job = await jobModel.findOne({_id:id})
+    console.log(
+      position,
+      company,
+      workLocation,
+      salary,
+      workType,
+      shift,
+      description
+    );
 
-        if(!job){
-            next(`No job Found with this id ${id}`)
-        }
-
-        const updateJob = await jobModel.findOneAndUpdate({_id:id},{
-            company : company,
-            workLocation : workLocation,
-            position: position,
-            workType : workType,
-            jobType : jobType
-        })
-
-        res.status(200).json({
-            updateJob
-        })
-    }catch(e){
-        next('Error in Controller')
+    if (
+      !workLocation ||
+      !position ||
+      !company ||
+      !workType ||
+      !shift ||
+      !salary ||
+      !description
+    ) {
+      next("Please Provide All fields");
     }
-}
+    console.log("Before Monogb Command");
+    const job = await jobModel.findOne({ _id: id });
+
+    if (!job) {
+      next(`No job Found with this id ${id}`);
+    }
+
+    const updateJob = await jobModel.findOneAndUpdate(
+      { _id: id },
+      {
+        position: position,
+        company: company,
+        workLocation: workLocation,
+        salary: salary,
+        workType: workType,
+        shift: shift,
+        description: description,
+      }
+    );
+
+    res.status(200).json({
+      updateJob,
+    });
+  } catch (e) {
+    next("Error in Controller");
+  }
+};
 
 export const deleteJobController = async(req, res, next) =>{
     try{
