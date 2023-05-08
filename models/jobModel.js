@@ -10,6 +10,11 @@ const jobSchema = new mongoose.Schema({
         required: [true, "Job Position is required"],
         maxlength: 100,
     },
+    workLocation: {
+        type: String,
+        default: "Mumbai",
+        required: [true, "Work location is required"],
+    },
     status: {
         type: String,
         enum: ["pending", "reject", "interview"],
@@ -20,11 +25,7 @@ const jobSchema = new mongoose.Schema({
         enum: ["full-time", "part-time", "internship", "contaract"],
         default: "full-time",
     },
-    workLocation: {
-        type: String,
-        default: "Mumbai",
-        required: [true, "Work location is required"],
-    },
+
      description: {
         type: String,
         requied: [true, "Description is require"],
