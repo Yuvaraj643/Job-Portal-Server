@@ -11,7 +11,7 @@ export const createJobController = async(req, res, next) =>{
       shift,
       description,
     } = req.body;
-    if(!company || !position){
+    if(!company || !position || !workLocation || !salary || !workType || !shift || !description){
         next('Please provide Values')
     }
     if(jobType === 'Teaching'){
