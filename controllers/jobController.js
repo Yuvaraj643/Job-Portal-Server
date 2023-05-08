@@ -1,38 +1,36 @@
 import jobModel from "../models/jobModel.js"
 
 //post api to create jobs
-export const createJobController = async(req, res, next) =>{
-    const {
-      position,
-      company,
-      workLocation,
-      salary,
-      workType,
-      shift,
-      description,
-    } = req.body;
-    if(!company || !position || !workLocation || !salary || !workType || !shift || !description){
-        next('Please provide Values')
-    }
-    if(jobType === 'Teaching'){
-        next('Teaching job is Not Allowed')
-    }
-    const newJob={
-      position,
-      company,
-      workLocation,
-      salary,
-      workType,
-      shift,
-      description
-    }
-    const job = await jobModel.create(newJob)
-    res.status(200).json({
-        success : true,
-        message : 'Job Added Successfully'
-    })
+export const createJobController = async (req, res, next) => {
+  const {
+    position,company,workLocation,
+    salary,
+    workType,
+    shift,
+    description,
+  } = req.body;
 
-}
+  if (!company || !position) {
+    next("Please provide Values");
+  }
+  // if (jobType === "Teaching") {
+  //   next("Teaching job is Not Allowed");
+  // }
+  const newJob = {
+    position,
+    company,
+    workLocation,
+    salary,
+    workType,
+    shift,
+    description,
+  };
+  const job = await jobModel.create(newJob);
+  res.status(200).json({
+    success: true,
+    message: "Job Added Successfully",
+  });
+};
 
 export const getAllJobController = async(req, res, next) =>{
     const jobs = await jobModel.find();
