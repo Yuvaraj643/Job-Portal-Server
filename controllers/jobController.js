@@ -87,6 +87,8 @@ export const updateJobController = async (req, res, next) => {
     );
 
     res.status(200).json({
+      success: true,
+      message: "Job Edited successfully",
       updateJob,
     });
   } catch (e) {
