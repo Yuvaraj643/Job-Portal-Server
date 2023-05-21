@@ -1,4 +1,4 @@
-import jobModel from "../models/jobModel.js"
+import jobModel from "../models/jobModel.js";
 
 //post api to create jobs
 export const createJobController = async (req, res, next) => {
@@ -32,14 +32,14 @@ export const createJobController = async (req, res, next) => {
   });
 };
 
-export const getAllJobController = async(req, res, next) =>{
-    const jobs = await jobModel.find();
-    res.status(200).json({
-        success: 'true',
-        jobs,
-        totalJobs : jobs.length
-    })
-}
+export const getAllJobController = async (req, res, next) => {
+  const jobs = await jobModel.find();
+  res.status(200).json({
+    success: "true",
+    jobs,
+    totalJobs: jobs.length,
+  });
+};
 
 export const updateJobController = async (req, res, next) => {
   try {
@@ -96,8 +96,6 @@ export const updateJobController = async (req, res, next) => {
     );
 
     res.status(200).json({
-      success: true,
-      message: "Job Edited successfully",
       updateJob,
     });
   } catch (e) {
@@ -105,27 +103,26 @@ export const updateJobController = async (req, res, next) => {
   }
 };
 
-export const deleteJobController = async(req, res, next) =>{
-    try{
-        const {id} =req.params
-        const job = await jobModel.findOne({_id:id})
+export const deleteJobController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const job = await jobModel.findOne({ _id: id });
 
-        if(!job){
-            next('No job Found')
-        }
-
-        await job.deleteOne({_id : id});
-
-        res.status(200).json({
-            message : "Success, Job Deleted"
-        })
-    }catch(e){
-        next('Error in Controller')
+    if (!job) {
+      next("No job Found");
     }
-}
 
+    await job.deleteOne({ _id: id });
 
-export const getOneJobController = async (req, res) => {
+    res.status(200).json({
+      message: "Success, Job Deleted",
+    });
+  } catch (e) {
+    next("Error in Controller");
+  }
+};
+
+const getOneJobController = async (req, res) => {
   try {
     const { id } = req.params;
     const job = await jobModel.findOne({ _id: id });
@@ -141,3 +138,4 @@ export const getOneJobController = async (req, res) => {
   }
 };
 
+export default getOneJobController;
