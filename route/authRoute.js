@@ -8,4 +8,8 @@ route.post('/register',registerController)
 
 route.post('/login', loginController)
 
+route.get('/protected',(req,res)=>{
+    const userId = req.userId;
+})
+
 export default route
