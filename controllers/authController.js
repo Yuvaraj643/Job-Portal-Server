@@ -45,41 +45,68 @@ export const registerController = async(req, res, next) => {
 }
 
 
-export const loginController = async (req, res, next) =>{
-  try{
-      const {email,password} =req.body
+export const loginController = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
 
-      if(!email){
-         next('Provide all Fields');
-      }
-    if(!password){
-      next('Password should not be empty');
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, error: "Please provide email and password" });
     }
 
-      const user = await userModel.findOne({email})
-      
-      if(!user){
-         next('Invalid Email and Password');
-      }
+    const user = await userModel.findOne({ email });
 
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-      res.status(200).json({
-          success : false,
-          error : 'Incorrect Password'
-        })
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, error: "Invalid credentials" });
     }
 
-      res.status(200).json({
-          success : true,
-          message : 'Login Successfully',
-          user
-      })
-  
-  
-  }catch(err){
-      next('Error in Register Controller')
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res
+        .status(401)
+        .json({ success: false, error: "Incorrect password" });
+    }
+
+    const token = jwt.sign({ userId: user._id }, "SecretKey");
+
+    res
+      .status(200)
+      .json({ success: true, message: "Login successfully", token, user });
+  } catch (err) {
+    next(err);
   }
-}
+};
+
+export const authenticateController = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    jwt.verify(token, "SecretKey", (err, decoded) => {
+      if (err) {
+        return res.status(401).json({
+          success: false,
+          message: "Invalid Token",
+        });
+      }
+
+      req.userId = decoded.userId;
+      next();
+    });
+  } catch (err) {
+    next("Error in Authenticate Controller");
+  }
+};
+
 
 
