@@ -96,6 +96,7 @@ export const updateJobController = async (req, res, next) => {
     );
 
     res.status(200).json({
+      message :"Job Updated Successfully",
       updateJob,
     });
   } catch (e) {
